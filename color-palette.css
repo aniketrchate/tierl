@@ -1,0 +1,16 @@
+
+
+:root {
+    --black: #76453B;           /* Dark reddish-brown for borders and accents */
+    --dark-gray: #B19470;       /* Warm beige/tan for tier backgrounds, tooltips */
+    --cyan: #43766C;            /* Muted greenish color for highlights */
+    --light-gray: #F8FAE5;      /* Light cream color for text and certain backgrounds */
+    --tier-bg: #F8FAE5;         /* Lighter background for tiers */
+    --tier-border: #76453B;     /* Dark reddish-brown border color for tiers */
+    --button-text: #F8FAE5;     /* Light cream text color for buttons */
+    --buttons-color: #43766C;   /* Greenish button background color */
+    --button-hover: #B19470;    /* Beige button hover color */
+    --buttons-bg: #76453B;      /* Button background color */
+    --background: #B19470;      /* General background color for the page */
+    --tooltip: #F8FAE5;         /* Tooltip background color */
+}

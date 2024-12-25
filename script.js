@@ -34,9 +34,8 @@ document.querySelectorAll(".row").forEach((row, index) => {
 	addRowListeners(row, defaultColors[index]);
 });
 
-for (const checkbox of document.querySelectorAll(".dynamic-style")) {
-	checkbox.addEventListener("change", () => dynamicStyle(checkbox));
-}
+// Automatically apply the square-img class on page load
+document.body.classList.add("square-img");
 
 document.addEventListener("drop", (e) => {
 	e.preventDefault();
@@ -113,7 +112,12 @@ function createColorPicker(colorPicker, tierLabel, defaultColor) {
 	return pickr;
 }
 
-function addRow(tierName = "New tier", defaultColor = clearColor) {
+function addRow(tierName = "New tier", defaultColor = null) {
+	// If no default color is provided, pick a random color from the defaultColors list
+	if (!defaultColor) {
+		defaultColor = defaultColors[Math.floor(Math.random() * defaultColors.length)];
+	}
+
 	const newRow = document.createElement("div");
 	newRow.className = "row";
 	newRow.innerHTML = `
@@ -129,20 +133,20 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 		<div class="tier-options" data-html2canvas-ignore>
 			<div class="options-container">
 				<div class="option delete">
-					<img src="./assets/trash.svg" alt="Delete" />
+					<span>🗑️</span>
 				</div>
 				<div class="option up">
-					<img src="./assets/chevron-up.svg" alt="Up" />
+					<span>⬆️</span>
 				</div>
 				<div class="option down">
-					<img src="./assets/chevron-down.svg" alt="Down" />
+					<span>⬇️</span>
 				</div>
 			</div>
 		</div>
 	`;
 
 	mainContainer.appendChild(newRow);
-	addRowListeners(newRow, defaultColor);
+	addRowListeners(newRow, defaultColor); // Pass selected defaultColor
 }
 
 function addRowListeners(row, defaultColor) {
@@ -151,12 +155,15 @@ function addRowListeners(row, defaultColor) {
 
 	const tierSort = row.querySelector(".sort");
 
-	const deleteButton = row.querySelector(".option.delete img");
-	const upButton = row.querySelector(".option.up img");
-	const downButton = row.querySelector(".option.down img");
+	const deleteButton = row.querySelector(".option.delete"); // Updated to work with emoji directly
+	const upButton = row.querySelector(".option.up span");
+	const downButton = row.querySelector(".option.down span");
 
 	const pickr = createColorPicker(colorPicker, tierLabel, defaultColor);
 	const dragInstance = addContainerDrag(tierSort);
+
+	// Set emoji content for delete button
+	deleteButton.innerHTML = "🗑️";
 
 	deleteButton.onclick = () => {
 		pickr.destroyAndRemove();
@@ -212,10 +219,6 @@ function uploadImages(files) {
 
 function addContainerDrag(container) {
 	return new Sortable(container, { group: "tiers" });
-}
-
-function dynamicStyle(checkbox) {
-	document.body.classList.toggle(checkbox.id, checkbox.checked);
 }
 
 async function exportImage() {

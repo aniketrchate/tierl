@@ -1,0 +1,384 @@
+:root {
+    --black: #181C14;           /* Very dark greenish-black background */
+    --dark-gray: #3C3D37;       /* Deep muted olive for tier backgrounds, tooltips */
+    --accent: #697565;          /* Soft olive green for highlights and text */
+    --light-gray: #ECDFCC;      /* Light beige for text, hover effects, and backgrounds */
+    --tier-bg: #3C3D37;         /* Dark muted olive background for tiers */
+    --tier-border: #697565;     /* Soft olive green border for tiers */
+    --button-text: #ECDFCC;     /* Light beige text color for buttons */
+    --buttons-color: #3C3D37;   /* Deep muted olive button background */
+    --button-hover: #697565;    /* Soft olive hover color */
+    --buttons-bg: #3C3D37;      /* Button background color (deep muted olive) */
+    --background: #181C14;      /* General background color for the page */
+    --tooltip: #697565;         /* Soft olive green for tooltips */
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body takes up at least the full height of the screen */
+}
+
+main {
+    flex-grow: 1; /* Makes sure the content takes up available space */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--dark-gray);
+    color: var(--light-gray);
+    text-align: center;
+    padding: 20px;
+    border-bottom: 2px solid var(--black);
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.row {
+    display: flex;
+}
+
+.sort {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2px;
+}
+
+.tier {
+    flex-grow: 1;
+    border-block: 1px solid var(--tier-border);
+    background-color: var(--tier-bg);
+}
+
+.images-bar {
+    padding: 10px;
+}
+
+.tier-element {
+    display: inline-flex;
+    vertical-align: top;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-height: 80px;
+}
+
+.tier-element.sortable-ghost {
+    opacity: 0.2;
+}
+
+/* Additional Style updates based on your color palette */
+.tier-label {
+    background-color: var(--dark-gray);
+    border: 1px solid var(--tier-border);
+    color: var(--light-gray);
+}
+
+.tier-label .label-text {
+    color: var(--light-gray);
+}
+
+.tier-options {
+    background-color: var(--dark-gray);
+}
+
+.tier-options .option {
+    color: var(--light-gray);
+    cursor: pointer;
+}
+
+.tier-options .option:hover {
+    background-color: var(--accent);
+}
+
+.tooltip {
+    background-color: var(--tooltip);
+    color: var(--black);
+}
+
+/* Button and button hover styles */
+button {
+    background-color: var(--buttons-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+/* Footer Styles */
+.footer {
+    background-color: var(--dark-gray);
+    color: var(--light-gray);
+    text-align: center;
+    padding: 15px;
+    border-top: 2px solid var(--black);
+    width: 100%;
+    position: relative;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.footer-icons {
+    display: flex;
+    justify-content: center; /* Aligns icons in a row */
+    margin-top: 10px;
+}
+
+.footer-icons a {
+    font-size: 1.5rem;
+    margin: 0 15px;
+    color: var(--light-gray);
+    text-decoration: none;
+}
+
+.footer-icons a:hover {
+    color: var(--accent);
+}
+
+/*
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+*/
+#blackout {
+	position: fixed;
+	opacity: 0;
+	z-index: 1;
+	transition: opacity 300ms;
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+#blackout[data-visibility="visible"] {
+	opacity: 0.5;
+	pointer-events: all;
+}
+.button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	transition: background-color 300ms;
+	margin: 10px;
+	border: none;
+	border-radius: 3px;
+	background-color: var(--buttons-color);
+	padding: 7px;
+	min-width: 100px;
+	color: var(--button-text);
+	font-size: xx-large;
+}
+
+.button:hover {
+	cursor: pointer;
+	background-color: var(--button-hover);
+}
+
+label {
+	display: inline-block;
+	cursor: pointer;
+	padding-block: 6px;
+	color: var(--button-text);
+}
+body.square-img .tier-element {
+	background-position: center;
+	background-size: cover;
+	width: 80px;
+	height: 80px;
+}.export-container {
+	display: flex;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	flex-direction: column;
+	transform: translate(-50%, -50%);
+	opacity: 0;
+	z-index: 2;
+	transition: opacity 300ms;
+	border-radius: 10px;
+	background-color: var(--white);
+	padding: 20px;
+	width: 100%;
+	max-height: calc(100dvh - 50px);
+	pointer-events: none;
+}
+
+.export-container[data-visibility="visible"] {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.exported-image-container {
+	max-height: 512px;
+	overflow-y: auto;
+}
+
+.exported-image-container img {
+	vertical-align: top;
+	width: 100%;
+}
+
+.export-button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.export-button-container button {
+	margin: 0;
+	border-radius: 5px;
+	padding: 10px 20px;
+}
+
+@media (width >= 786px) {
+	.export-container {
+		max-width: 786px;
+	}
+}
+.pcr-button {
+	margin: 10px !important;
+}
+
+.pcr-button,
+.pcr-button::before,
+.pcr-button::after {
+	width: 60px !important;
+	height: 30px !important;
+}
+
+.pcr-swatches {
+	display: flex !important;
+	margin-inline: auto;
+}
+
+.tooltip {
+	position: absolute;
+	top: 50%;
+	left: 110%;
+	transform: translate(0, -50%);
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 300ms, visibility 0s 300ms;
+	border-radius: 6px;
+	background-color: var(--tooltip);
+	width: 80px;
+	height: 50px;
+}
+
+.tooltip::before {
+	position: absolute;
+	top: 50%;
+	right: 100%;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent var(--tooltip) transparent transparent;
+	content: "";
+}
+
+.tooltip[data-visibility="visible"] {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 300ms;
+}
+.tier-options {
+	display: flex;
+	align-items: center;
+	border: 1px solid var(--tier-border);
+	background-color: var(--black);
+}
+
+.options-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+    font-size: x-large;
+	height: 80px;
+}
+
+.option {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: auto;
+}
+
+.option.delete {
+	grid-row: span 2;
+	justify-content: right;
+}
+
+.option img {
+	transition: filter 200ms;
+	cursor: pointer;
+}
+
+.option img:hover {
+	filter: contrast(0%);
+}
+.tier-label {
+	position: relative;
+	transition-duration: 300ms;
+	transition-property: background-color, color;
+	border: 1px solid var(--tier-border);
+	width: 100px;
+	min-height: 80px;
+}
+
+.label-text {
+	display: flex;
+	align-items: center;
+	padding: 6px 2px;
+	height: 100%;
+}
+
+.label-text:focus {
+	outline: 1px solid var(--white);
+}
+
+.label-text span {
+	width: 100%;
+	text-align: center;
+}
+.list-options {
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid var(--buttons-color);
+	background-color: var(--buttons-bg);
+}
+
+.list-options-container {
+	display: flex;
+	overflow-y: auto;
+}
